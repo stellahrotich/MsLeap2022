@@ -1,1 +1,252 @@
+#144. Preoder Traversal of a binary Tree -  Recursive
+class Solution(object):
+    def preorderTraversal(self, root):
+        res = []
+        if root:
+            res.append(root.val)
+            res = res + self.preorderTraversal(root.left)
+            res = res + self.preorderTraversal(root.right)
+        return res
+               
+#144. Preoder Traversal of a binary tree - Iterative
+class Solution(object):
+    def preorderTraversal(self, root):
+        stack, res = [root], []
+        while stack:
+            curr = stack.pop()
+            if curr:
+                res.append(curr.val)
+                stack.append(curr.right)
+                stack.append(curr.left)
+        return res
+    
+  #145.postorderTraversal
+ class Solution(object):
+   def postorderTraversal(self, root):
+       """
+       :type root: TreeNode
+       :rtype: List[int]
+       """
+       stack, res = [root], deque([])
+       while stack:
+           curr = stack.pop()
+           if curr:
+               res.appendleft(curr.val)
+               stack.append(curr.left)
+               stack.append(curr.right)
+        return res
+  
+  #145. postorderTraversal - Recursive
+  class Solution(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        if root is not None:
+            res = self.postorderTraversal(root.left)
+            res = res + self.postorderTraversal(root.right)
+            res.append(root.val)
+        return res
+        
+  #94. Inorder Traversal of  a binary Tree - Recursive
+ class Solution(object):
+   def inorderTraversal(self, root):
+       res = []
+       if root:
+           res = self.inorderTraversal(root.left)
+           res.append(root.val)
+           res = res + self.inorderTraversal(root.right) 
+       return res
+        
+ #102. Binary Tree Level Order Traversal
+ class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        #create a list of nodes in the current level
+        #create a queue
+        #bfs
+        res  = []
+        if root is None:
+            return res
+        q = deque()
+        q.append(root) #3
+        
+        while q:
+            level = len(q)#1
+            level_items = []
+            
+            for i in range(level):
+                current = q.popleft()#3
+                level_items.append(current.val)#3
+                
+                if current.left:
+                    q.append(current.left)#9
+                    
+                if current.right:
+                    q.append(current.right)#20
+                    
+            res.append(level_items)
+        return res
+ 
+  #199. Binary Tree Right Side View
+  class Solution(object):
+    def rightSideView(self, root):
+        res  = []
+        if root is None:
+            return res
+            
+        q = deque()
+        q.append(root) #3
+        while q:
+            level = len(q)#1
+            level_items = []
+            
+            for i in range(level):
+                current = q.popleft()#3
+                level_items.append(current.val)#3
+                
+                if current.left:
+                    q.append(current.left)#9
+                    
+                if current.right:
+                    q.append(current.right)#20
+                    
+            res.append(level_items[-1])
+        return res
+        
+# 104. Maximum Depth of Binary Tree
+class Solution(object):
+   def maxDepth(self, root):
+       if root is None:
+           return 0
+       else:
+           return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+      
+# 111. Minimum Depth of Binary Tree
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        
+        if root.left is None and root.right is None:
+            return 1
+        
+        if root.left is None:
+            return 1 + self.minDepth(root.right)
+        
+        if root.right is None:
+            return 1 + self.minDepth(root.left)
+        
+        return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+            
+            
+  #99. Recover Binary Search Tree
+  class Solution(object):
+    def inorder_traversal(self, node):
+        if node is None:
+            return []
+        return self.inorder_traversal(node.left) + [node] + self.inorder_traversal(node.right)
+    
+    def recoverTree(self, root):
+        #store the resulting nodes in a list to allow for comparison of indices
+        nodes = self.inorder_traversal(root) #[3,2,1]
+        
+        start, end = 0, len(nodes)-1
+        # Find indices to swap
+        while start < len(nodes) - 1 and nodes[start].val < nodes[start+1].val:
+                start += 1
+                continue
+        while end >= 1 and nodes[end-1].val < nodes[end].val:
+                end -= 1 
+                continue   
+                
+        #swap values found at the indices above when conditions were not met
+        nodes[start].val, nodes[end].val = nodes[end].val, nodes[start].val
+        return root
 
+#Same Tree 
+class Solution(object):
+    def isSameTree(self, p, q):
+        if not p and not q:
+            return True
+            
+        if not p or not q:
+            return False 
+            
+        left = self.isSameTree(p.left, q.left)# True
+        right = self.isSameTree(p.right, q.right) #True
+        return (p.val == q.val) and left and right
+        
+#101. Symmetric Tree
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root : 
+            return True
+        
+        queue1 = deque([])
+        queue2 = deque([])
+        
+        queue1.append(root)
+        queue2.append(root)
+        
+        while queue1 and queue2:  
+            t1 = queue1.pop()
+            t2 = queue2.pop()
+            
+            if ( t1 == None and t2 == None): 
+                continue
+                
+            if ( t1 == None or t2 == None): 
+                return False
+            
+            if ( t1.val != t2.val): 
+                return False
+            
+            queue1.append(t1.left)
+            queue2.append(t2.right)
+            queue1.append(t1.right)
+            queue2.append(t2.left)
+            
+        return True
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+'''
+Range Sum of BST - Josh
+
+
+
+MineSweeper - Dennis
+
+Battleships - Stellah
+
+Snakes & Ladders - Josh
+
+Max Area - Frank
+
+All nodes distance k - Dennis
+
+Bus routes - All
+'''
+                
