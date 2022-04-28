@@ -46,3 +46,15 @@ class Solution(object):
     def reverseWords(self, s):
         s = s.split()
         return " ".join(s[::-1])
+
+
+5. CLIMBING STAIRS
+class Solution(object):
+    def climbingStairs(self, n):
+        if n == 1:
+            return 1
+        dp[1] = 1
+        dp[2] = 2
+        for i in range(3,n+1):
+            dp[i] = dp[i-1] +dp[1-1]
+        return dp[n
