@@ -1,4 +1,12 @@
 #144. Preoder Traversal of a binary Tree -  Recursive
+
+'''
+Algorithmn
+1. visit the root node
+2. Recursively traverse preorder the left subtree
+3. Recursively traverse preorder the right subtree
+4. If node is null, return empty
+'''
 class Solution(object):
     def preorderTraversal(self, root):
         res = []
@@ -9,6 +17,8 @@ class Solution(object):
         return res
                
 #144. Preoder Traversal of a binary tree - Iterative
+'''
+
 class Solution(object):
     def preorderTraversal(self, root):
         stack, res = [root], []
@@ -260,17 +270,10 @@ class Solution(object):
         
 '''
 Range Sum of BST - Josh
-
-
-
 MineSweeper - Dennis
-
 Battleships - Stellah
-
 Snakes & Ladders - Josh
-
 Max Area - Frank
-
 All nodes distance k - Dennis
 
 Bus routes - All
