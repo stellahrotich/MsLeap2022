@@ -1,0 +1,16 @@
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def check(root, l, r):
+            if root == None:
+                return True
+            
+            val = root.val
+            if val <= l or val >= r:
+                return False
+            
+            return check(root.left, l, val) and check(root.right, val, r)
+        return check(root, float('-inf'), float('inf'))
