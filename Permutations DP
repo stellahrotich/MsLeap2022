@@ -1,0 +1,25 @@
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # Function to swap two elements in the array
+        def swap(nums, i, l):
+            temp = nums[l]
+            nums[l] = nums[i]
+            nums[i] = temp
+
+        # Recursive function to generate all permutations of array
+        def permutations(nums, l, r):
+            if l == r:
+                k = nums[:]
+                self.res.append(k)
+                return
+
+            for i in range(l, r+1):
+                swap(nums, l, i)  # swap elements
+                permutations(nums, l + 1, r)  # recurse
+                swap(nums, l, i)  # Backtracking step
+               
+
+        # return result  main function
+        self.res = []
+        permutations(nums, 0, len(nums) - 1)
+        return self.res
