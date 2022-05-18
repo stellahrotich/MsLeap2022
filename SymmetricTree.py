@@ -1,3 +1,4 @@
+#iterative
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         if not root:
